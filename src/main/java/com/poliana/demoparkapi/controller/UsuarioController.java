@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poliana.demoparkapi.DTO.UsuarioResponseDto;
+import com.poliana.demoparkapi.DTO.UsuarioSenhaDto;
 import com.poliana.demoparkapi.DTO.usuarioCreateDTO;
 import com.poliana.demoparkapi.DTO.mapper.UsuarioMapper;
 import com.poliana.demoparkapi.entities.Usuario;
@@ -35,16 +36,16 @@ public class UsuarioController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable Long id){
+	public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id){
 		Usuario user = usuarioService.buscarPorId(id);
-		return ResponseEntity.ok(user);		
+		return ResponseEntity.ok(UsuarioMapper.toDto(user));		
 	}
 	
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Usuario> updatePassword(@PathVariable Long id ,@RequestBody Usuario usuario){
-		Usuario user = usuarioService.editarSenha(id, usuario.getPassword());
-		return ResponseEntity.ok(user);		
+	public ResponseEntity<Void>updatePassword(@PathVariable Long id ,@RequestBody UsuarioSenhaDto dto){
+		Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
+		return ResponseEntity.noContent().build();		
 	}
 	
 	
