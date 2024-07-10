@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "role", nullable = true, length = 25)
+	@Column(name = "role", nullable = false, length = 25)
 	private Role role;
 	
 	@Column(name = "data_criacao")
@@ -49,9 +49,11 @@ public class Usuario implements Serializable {
 	private String modificadoPor;
 	
 
+	public enum Role{
+		ROLE_ADMIN, ROLE_CLIENTE
+	}
 	
 	
-
 	public Usuario() {
 		
 	}
@@ -148,15 +150,6 @@ public class Usuario implements Serializable {
 
 	public void setModificadoPor(String modificadoPor) {
 		this.modificadoPor = modificadoPor;
-	}
-
-
-
-
-
-
-	public enum Role{
-		Role_ADMIN, rOLE_CLIENTE
 	}
 
 
