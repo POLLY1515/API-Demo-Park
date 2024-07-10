@@ -12,14 +12,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor
+
 @Entity
 @Table(name= "usuarios")
 public class Usuario implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "role", nullable = false, length = 25)
+	@Column(name = "role", nullable = true, length = 25)
 	private Role role;
 	
 	@Column(name = "data_criacao")
@@ -45,32 +45,125 @@ public class Usuario implements Serializable {
 	@Column(name = "criado-por")
 	private String criadoPor;
 	
-	@Column(name = "modificadi-por")
-
+	@Column(name = "modificado-por")
 	private String modificadoPor;
 	
-	
 
 	
 	
-	
-	public enum Role{
-		Role_ADMIN, rOLE_CLIENTE
+
+	public Usuario() {
+		
+	}
+
+
+	public Usuario(Long id, String userName, String password, Role role, LocalDateTime dataCriacao,
+			LocalDateTime dataModificacao, String criadoPor, String modificadoPor) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+		this.dataCriacao = dataCriacao;
+		this.dataModificacao = dataModificacao;
+		this.criadoPor = criadoPor;
+		this.modificadoPor = modificadoPor;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public Role getRole() {
+		return role;
+	}
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+
+	public LocalDateTime getDataModificacao() {
+		return dataModificacao;
+	}
+
+
+	public void setDataModificacao(LocalDateTime dataModificacao) {
+		this.dataModificacao = dataModificacao;
+	}
+
+
+	public String getCriadoPor() {
+		return criadoPor;
+	}
+
+
+	public void setCriadoPor(String criadoPor) {
+		this.criadoPor = criadoPor;
+	}
+
+
+	public String getModificadoPor() {
+		return modificadoPor;
+	}
+
+
+	public void setModificadoPor(String modificadoPor) {
+		this.modificadoPor = modificadoPor;
 	}
 
 
 
 
+
+
+	public enum Role{
+		Role_ADMIN, rOLE_CLIENTE
+	}
 
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
-
-
-
 
 
 	@Override
