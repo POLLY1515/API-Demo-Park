@@ -20,6 +20,8 @@ import com.poliana.demoparkapi.DTO.mapper.UsuarioMapper;
 import com.poliana.demoparkapi.entities.Usuario;
 import com.poliana.demoparkapi.service.UsuarioService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("api/v1/usuarios")
@@ -29,7 +31,7 @@ public class UsuarioController {
 	private  UsuarioService usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<UsuarioResponseDto> create(@RequestBody usuarioCreateDTO createDto){
+	public ResponseEntity<UsuarioResponseDto> create( @Valid @RequestBody usuarioCreateDTO createDto){
 		Usuario user = usuarioService.save(UsuarioMapper.toUsuario(createDto));
 		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));		
 	}
