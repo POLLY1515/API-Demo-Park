@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poliana.demoparkapi.DTO.UsuarioResponseDto;
+import com.poliana.demoparkapi.DTO.usuarioCreateDTO;
+import com.poliana.demoparkapi.DTO.mapper.UsuarioMapper;
 import com.poliana.demoparkapi.entities.Usuario;
 import com.poliana.demoparkapi.service.UsuarioService;
 
@@ -25,9 +28,9 @@ public class UsuarioController {
 	private  UsuarioService usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
-		Usuario user = usuarioService.save(usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);		
+	public ResponseEntity<UsuarioResponseDto> create(@RequestBody usuarioCreateDTO createDto){
+		Usuario user = usuarioService.save(UsuarioMapper.toUsuario(createDto));
+		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));		
 	}
 	
 	
