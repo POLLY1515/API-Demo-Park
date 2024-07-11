@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.poliana.demoparkapi.entities.Usuario;
+import com.poliana.demoparkapi.exception.UsernameUniqueViolationException;
 import com.poliana.demoparkapi.repository.UsuarioRepository;
 
 
@@ -20,7 +21,14 @@ public class UsuarioService {
 
 	@Transactional
 	public Usuario save(Usuario usuario) {
-		return usuarioRepository.save(usuario);
+		try {
+			return usuarioRepository.save(usuario);
+
+		}catch(org.springframework.dao.DataIntegrityViolationException ex) {
+			throw new UsernameUniqueViolationException(String.format("UserName {%s} ja cadastrado",
+					usuario.getUserName()));
+		}
+		
 	}
 
 	@Transactional(readOnly = true)
