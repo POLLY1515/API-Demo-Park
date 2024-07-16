@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.poliana.demoparkapi.entities.Usuario;
+import com.poliana.demoparkapi.exception.EntityNotFoundException;
 import com.poliana.demoparkapi.exception.UsernameUniqueViolationException;
 import com.poliana.demoparkapi.repository.UsuarioRepository;
 
@@ -40,7 +41,7 @@ public class UsuarioService {
 	@Transactional
 	public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
 		if(!novaSenha.equals(confirmaSenha)) {
-			throw new RuntimeException("Nova senha não confere com configuração atual");
+			throw new EntityNotFoundException(String.format("Usuario id=%s não encontrado", id));
 		}
 		Usuario user = buscarPorId(id);
 		

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -17,9 +19,10 @@ public class ApiExceptionHandler {
 	public ResponseEntity<ErrorMessage>methodArgumentNotvalidException(MethodArgumentNotValidException ex,
 			HttpServletRequest request, BindingResult result){
 		
+		
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).contentType(MediaType.APPLICATION_JSON)
 				.body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s)"
-						+ "inválidos", result));
+						+ "inválido(s)", result));
 	} 
 	
 	@ExceptionHandler(	UsernameUniqueViolationException.class)

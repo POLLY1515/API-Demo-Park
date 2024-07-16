@@ -18,17 +18,39 @@ import com.poliana.demoparkapi.DTO.UsuarioSenhaDto;
 import com.poliana.demoparkapi.DTO.usuarioCreateDTO;
 import com.poliana.demoparkapi.DTO.mapper.UsuarioMapper;
 import com.poliana.demoparkapi.entities.Usuario;
+import com.poliana.demoparkapi.exception.ErrorMessage;
 import com.poliana.demoparkapi.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 
+@Tag(name="Usuarios", description= "Contém todas as operações relativas aos recursos para cadastro, edição, e"
+		+ "leitura de um usuário.")
 @RestController
 @RequestMapping("api/v1/usuarios")
 public class UsuarioController {
 	
 	@Autowired
 	private  UsuarioService usuarioService;
+	
+	@Operation(summary= "Criar um novo usuário", description= "Recurso para criar um novo usuário",
+			responses = {
+					@ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
+							content = @Content(mediaType = "application/json",
+							schema = @Schema(implementation = UsuarioResponseDto.class))),
+					@ApiResponse(responseCode = "409", description = "Usuário e email já cadastrado no sistema",
+							content = @Content(mediaType = "application/json",
+							schema = @Schema(implementation = ErrorMessage.class))),
+					@ApiResponse(responseCode = "422", description = "Recurso não processado por dados de entrada inválidos",
+							content = @Content(mediaType = "application/json",
+							schema = @Schema(implementation = ErrorMessage.class))),
+				
+			})
 	
 	@PostMapping
 	public ResponseEntity<UsuarioResponseDto> create( @Valid @RequestBody usuarioCreateDTO createDto){
