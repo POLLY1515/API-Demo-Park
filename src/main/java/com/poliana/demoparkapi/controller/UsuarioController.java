@@ -51,7 +51,6 @@ public class UsuarioController {
 							schema = @Schema(implementation = ErrorMessage.class))),
 				
 			})
-	
 	@PostMapping
 	public ResponseEntity<UsuarioResponseDto> create( @Valid @RequestBody usuarioCreateDTO createDto){
 		Usuario user = usuarioService.save(UsuarioMapper.toUsuario(createDto));
@@ -59,6 +58,17 @@ public class UsuarioController {
 	}
 	
 	
+	
+	@Operation(summary= "Recuperar um usuário pelo id", description= "Recuperar um usuário pelo id",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "Recurso recuperado com sucesso",
+							content = @Content(mediaType = "application/json",
+							schema = @Schema(implementation = UsuarioResponseDto.class))),
+					@ApiResponse(responseCode = "404", description = "Recurso não encontrado",
+							content = @Content(mediaType = "application/json",
+							schema = @Schema(implementation = ErrorMessage.class))),
+				
+			})
 	@GetMapping("/{id}")
 	public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id){
 		Usuario user = usuarioService.buscarPorId(id);
