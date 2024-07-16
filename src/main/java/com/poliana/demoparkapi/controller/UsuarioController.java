@@ -20,6 +20,7 @@ import com.poliana.demoparkapi.DTO.mapper.UsuarioMapper;
 import com.poliana.demoparkapi.entities.Usuario;
 import com.poliana.demoparkapi.exception.ErrorMessage;
 import com.poliana.demoparkapi.service.UsuarioService;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -97,6 +98,14 @@ public class UsuarioController {
 	}
 	
 	
+	
+
+	@Operation(summary = "Listar todos os usuários", description = "Listar todos os usuários cadastrados",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Lista com todos os usuários cadastrados",
+                            content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = UsuarioResponseDto.class))))
+            })
 	@GetMapping
 	public ResponseEntity<List<UsuarioResponseDto>> getAll(){
 		List<Usuario>users = usuarioService.buscarTodos();
